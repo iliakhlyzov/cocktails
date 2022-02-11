@@ -23,6 +23,7 @@ interface CocktailTag {
  *   Group cocktails by tags.
  *   The response should be of type CocktailTag[].
  *   Your server should respond with this array of cocktail tags
+ * 4. Cover your code with unit tests (You'll need to add Jest or other testing library)
  */
 
 http
