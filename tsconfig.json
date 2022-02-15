@@ -1,21 +1,26 @@
 {
-  "include": [
+  "include": [ // на какие папки и файлы обращает TS
     "src/**/*.ts"
   ],
   "compilerOptions": {
-    "target": "es2017",
-    "allowJs": true,
-    "module": "commonjs",
-    "sourceMap": true,
+    "target": "es2017", // целевая версия
+    "allowJs": true, // allow js files
+    "module": "commonjs", // system of module
+    "sourceMap": true, // карта исходного кода для отладки
     "removeComments": true,
     "outDir": "./dist",
     "rootDir": "./src",
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": true
+    "emitDecoratorMetadata": true, // for using of decorators
+    "esModuleInterop": true, // instead of requiare
+    "strict": true, // use always strict mode
+    // "declaration": true // generate d.ts
+    "isolatedModules": true, // каждый файл ts делает модулем: пространство имен изолировано и что бы использовать функции из модуля или класс необходимо явно прописывать экспорт или импорт!
+    "strictPropertyInitialization": false,
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "uploads"
   ]
 }

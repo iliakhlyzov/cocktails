@@ -1,19 +1,8 @@
 import http from 'http';
-
-interface Cocktail {
-  id: string; // idDrink
-  name: string; // strDrink
-  category: string; // strCategory
-  ingredients: {
-    name: string; // strIngredient(1-15)
-    measure: string | null; // strMeasure(1-15)
-  }[]
-}
-
-interface CocktailTag {
-  name: string;
-  cocktails: Cocktail[];
-}
+import _ from 'lodash';
+import bootstrap from './data/bootstrap/bootstrap';
+import 'reflect-metadata';
+import { CocktailTagBuilder } from './services/CocktailBuilder/CocktailBuilder';
 
 /**
  * Tasks
@@ -25,10 +14,21 @@ interface CocktailTag {
  *   Your server should respond with this array of cocktail tags
  * 4. Cover your code with unit tests (You'll need to add Jest or other testing library)
  */
+class Program {
+  public static async Main() {
+    await bootstrap();
+    const server = http
+      .createServer(function async(req, res) {
+        if (CocktailTagBuilder.getLoadStatus() === 'Ready') {
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.write(JSON.stringify(CocktailTagBuilder.getCocktailTagArray(), null, 2));
+        } else {
+          res.write("Something doesn't work");
+        }
+        res.end();
+      })
+      .listen(8080);
+  }
+}
 
-http
-  .createServer(function (req, res) {
-    res.write('ok');
-    res.end();
-  })
-  .listen(8080);
+Program.Main().catch((err) => console.log('Something is wrong! ' + err));
