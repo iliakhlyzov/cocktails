@@ -1,5 +1,3 @@
-import _ from 'lodash';
-import { EMPTY_TAG } from '../../data/constants';
 import { Cocktail, CocktailTag, CocktailTags, taggedCocktail } from '../../data/interfaces/cocktail';
 
 export class CocktailTagBuilder {
@@ -9,16 +7,23 @@ export class CocktailTagBuilder {
   private static areCocktailLoaded: boolean = false;
 
   public static buildCocktailTags(taggedCocktails: taggedCocktail[]) {
-    _.forEach(taggedCocktails, (taggedCocktail) => {
+    taggedCocktails.forEach((taggedCocktail) => {
       const tags = taggedCocktail.tags;
-      const cocktail: Cocktail = _.omit(taggedCocktail, 'tags');
-      _.forEach(tags, (tag) => {
+      const cocktail = Object.entries(taggedCocktail).reduce((acc, [key, value]) => {
+        if (key === 'tags') {
+          return acc;
+        }
+        acc[key] = value;
+        return acc;
+      }, {} as any) as Cocktail;
+      tags.forEach((tag) => {
         if (this.cocktailTags[tag] === undefined) {
           this.cocktailTags[tag] = [];
         }
         this.cocktailTags[tag].push(cocktail);
       });
     });
+
     this.areCocktailLoaded = true;
   }
 
@@ -26,9 +31,8 @@ export class CocktailTagBuilder {
     if (!this.areCocktailLoaded) {
       return null;
     }
-    this.cocktailTag = [];
-    _.forIn(this.cocktailTags, (cocktails, name) => {
-      this.cocktailTag.push({ name, cocktails });
+    Object.keys(this.cocktailTags).forEach((key) => {
+      this.cocktailTag.push({ name: key, cocktails: this.cocktailTags[key] });
     });
     return this.cocktailTag;
   }

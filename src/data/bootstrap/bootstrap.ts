@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { HttpFetch } from '../../services/HttpFetch/HttpFetch';
 import { DrinksValidator } from '../../services/Validator/validator/validator';
 import { Transformer } from '../../services/Transformer/Transformer';

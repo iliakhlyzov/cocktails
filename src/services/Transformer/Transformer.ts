@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { EMPTY_TAG, MEASEURE_OR_INGREDIENT_COUNT } from '../../data/constants';
+import { EMPTY_TAG, MEASURE_OR_INGREDIENT_COUNT } from '../../data/constants';
 import { Ingredient, taggedCocktail } from '../../data/interfaces/cocktail';
 import { Drink } from '../Validator/validator/classes/Drink';
 
@@ -10,20 +9,21 @@ export class Transformer {
     const strIngredientList: string[] = [];
     const strMeasureList: string[] = [];
 
-    for (let i = 1; i <= 15; i++) {
+    for (let i = 1; i <= MEASURE_OR_INGREDIENT_COUNT; i++) {
       strIngredientList.push('strIngredient' + i);
       strMeasureList.push('strMeasure' + i);
     }
 
-    _.forEach(drinks, (drink) => {
+    drinks.forEach((drink) => {
       const id = drink.idDrink;
       const name = drink.strDrink;
       const category = drink.strCategory;
-      const tags = _.isNull(drink.strTags) ? [EMPTY_TAG] : _.uniq(drink.strTags.trim().split(','));
+      const tags: string[] = drink.strTags == null || !drink.strTags.trim() ? [EMPTY_TAG] : [...new Set<string>(drink.strTags.trim().split(','))];
       const ingredients: Ingredient[] = [];
-      for (let i = 0; i <= MEASEURE_OR_INGREDIENT_COUNT; i++) {
-        const name = _.get(drink, strIngredientList[i]);
-        const measure = _.get(drink, strMeasureList[i]);
+      for (let i = 0; i < MEASURE_OR_INGREDIENT_COUNT; i++) {
+        const copyDrink: any = drink;
+        const name = copyDrink[strIngredientList[i]];
+        const measure = copyDrink[strMeasureList[i]];
         if (name) {
           ingredients.push({ name, measure });
         }
