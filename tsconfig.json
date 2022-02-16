@@ -16,7 +16,7 @@
     "esModuleInterop": true, // instead of requiare
     "strict": true, // use always strict mode
     // "declaration": true // generate d.ts
-    "isolatedModules": true, // каждый файл ts делает модулем: пространство имен изолировано и что бы использовать функции из модуля или класс необходимо явно прописывать экспорт или импорт!
+    // "isolatedModules": true, // каждый файл ts делает модулем: пространство имен изолировано и что бы использовать функции из модуля или класс необходимо явно прописывать экспорт или импорт!
     "strictPropertyInitialization": false,
   },
   "exclude": [
