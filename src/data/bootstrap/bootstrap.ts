@@ -6,7 +6,12 @@ import { CocktailTagBuilder } from '../../services/CocktailBuilder/CocktailBuild
 export default async () => {
   const url = new URL('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita');
 
-  const rawdrinks: any[] = await HttpFetch.getDrinks(url);
+  const drinkFetchResult = await HttpFetch.getDrinks(url).catch((_err) => {});
+  if (!drinkFetchResult || drinkFetchResult.drinks == null) {
+    return;
+  }
+
+  const rawdrinks: object[] = drinkFetchResult.drinks;
   const drinks = DrinksValidator.validate(rawdrinks);
   const taggedCocktails = Transformer.getTaggedCocktailsFromDrinks(drinks);
   CocktailTagBuilder.buildCocktailTags(taggedCocktails);

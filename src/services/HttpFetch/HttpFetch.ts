@@ -1,12 +1,17 @@
 import fetch from 'node-fetch';
+import { DrinkFetchResult } from './HttpFetch.d';
 
 export class HttpFetch {
   public static async getDrinks(url: URL) {
     const response = await fetch(url.href);
-    const { drinks } = await response.json();
-    if (!(drinks instanceof Array)) {
-      throw new Error("There isn't array of drinks in response json!");
+
+    let result: DrinkFetchResult;
+    if (response && response.ok) {
+      const { drinks } = await response.json();
+      if (drinks instanceof Array) {
+        return { status: 'ok', drinks };
+      }
     }
-    return drinks;
+    return { status: 'error', drinks: null };
   }
 }
