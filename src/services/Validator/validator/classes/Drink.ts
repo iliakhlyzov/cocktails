@@ -1,10 +1,18 @@
 import { IsNotEmpty } from 'class-validator';
 
 export class Drink {
+  @IsNotEmpty()
   idDrink: string;
+
+  @IsNotEmpty()
   strDrink: string;
+
+  @IsNotEmpty()
   strCategory: string;
+
+  @IsNotEmpty()
   strIngredient1: string;
+
   strIngredient2: string;
   strIngredient3: string;
   strIngredient4: string;
