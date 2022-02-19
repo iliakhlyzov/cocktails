@@ -14,7 +14,7 @@ export class DrinksValidator {
       return null;
     }
 
-    this.drinks = await rawdrinks.reduce(async (acc, rawdrink) => {
+    this.drinks = await rawdrinks.reduce(async (acc, rawdrink, index) => {
       const drink: Drink = plainToClass(Drink, rawdrink, {});
       const errors = await v.validate(drink);
       if (errors.length === 0) {

@@ -5,6 +5,10 @@
 1. Run `npm start`
 1. Check `http://localhost:8080/`
 
+## Tests
+
+- Run `npm run test`
+
 ## Services and their functions
 
 - HttpFetch:

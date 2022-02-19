@@ -37,9 +37,9 @@ export class Transformer {
     }
 
     drinks.forEach((drink) => {
-      const id = drink.idDrink;
-      const name = drink.strDrink;
-      const category = drink.strCategory;
+      const id = drink.idDrink.trim();
+      const name = drink.strDrink.trim();
+      const category = drink.strCategory.trim();
       const tags = this.parseTags(drink.strTags);
       const ingredients: Ingredient[] = [];
       for (let i = 0; i < MEASURE_OR_INGREDIENT_COUNT; i++) {
@@ -47,7 +47,7 @@ export class Transformer {
         const name = copyDrink[strIngredientList[i]];
         const measure = copyDrink[strMeasureList[i]];
         if (name) {
-          ingredients.push({ name, measure });
+          ingredients.push({ name: name.trim(), measure: measure ? measure.trim() : measure });
         }
       }
       this.taggedCocktails.push({ id, name, category, tags, ingredients });

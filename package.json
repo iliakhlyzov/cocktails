@@ -8,8 +8,9 @@
     "start": "concurrently \"parcel --target node src/index.ts\" \"nodemon dist/index.js\" ",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "test:w": "jest --no-cache --watch",
-    "test": "jest --no-cache"
+    "test:w": "jest --watch",
+    "test": "jest",
+    "test:c": "jest --coverage"
   },
   "dependencies": {
     "@types/lodash": "^4.14.178",

@@ -1,12 +1,26 @@
 import { Cocktail, CocktailTag, CocktailTags, taggedCocktail } from '../../data/interfaces/cocktail';
 
 export class CocktailTagBuilder {
-  private static cocktailTags: CocktailTags = {};
   private static cocktailTag: CocktailTag[] = [];
+  private static tags: string[] = [];
 
   private static areCocktailLoaded: boolean = false;
 
+  public static reload() {
+    this.cocktailTag = [];
+    this.tags = [];
+
+    this.areCocktailLoaded = false;
+
+    return true;
+  }
+
   public static buildCocktailTags(taggedCocktails: taggedCocktail[]) {
+    const cocktailTags: CocktailTags = {};
+    if (this.areCocktailLoaded) {
+      return false;
+    }
+
     taggedCocktails.forEach((taggedCocktail) => {
       const tags = taggedCocktail.tags;
       const cocktail = Object.entries(taggedCocktail).reduce((acc, [key, value]) => {
@@ -17,27 +31,34 @@ export class CocktailTagBuilder {
         return acc;
       }, {} as any) as Cocktail;
       tags.forEach((tag) => {
-        if (this.cocktailTags[tag] === undefined) {
-          this.cocktailTags[tag] = [];
+        if (cocktailTags[tag] === undefined) {
+          cocktailTags[tag] = [];
         }
-        this.cocktailTags[tag].push(cocktail);
+        cocktailTags[tag].push(cocktail);
       });
     });
 
+    Object.keys(cocktailTags).forEach((tag) => {
+      this.tags.push(tag);
+      this.cocktailTag.push({ name: tag, cocktails: cocktailTags[tag] });
+    });
+
     this.areCocktailLoaded = true;
+    return true;
   }
 
   public static getCocktailTagArray() {
     if (!this.areCocktailLoaded) {
       return null;
     }
-    Object.keys(this.cocktailTags).forEach((key) => {
-      this.cocktailTag.push({ name: key, cocktails: this.cocktailTags[key] });
-    });
     return this.cocktailTag;
   }
 
   public static getLoadStatus() {
     return this.areCocktailLoaded ? 'Ready' : 'Wait for build CocktailTags';
+  }
+
+  public static getTags() {
+    return this.tags;
   }
 }

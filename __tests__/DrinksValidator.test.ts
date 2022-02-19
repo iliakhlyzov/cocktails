@@ -29,5 +29,12 @@ describe(' DrinksValidator: Negative tests', () => {
       const arr = [{ name: 'ilia' }];
       const drinks = await DrinksValidator.validate(arr);
       expect(drinks).toHaveLength(0);
+    }),
+    it('novalidate object: array with not like drink object', async () => {
+      const { nonValidatedDrinks } = require('../__fixtures__/drinks');
+      const result = await DrinksValidator.validate(nonValidatedDrinks);
+      expect(result).toHaveLength(0);
+
+      expect(DrinksValidator.getCurrentDrinks()).toHaveLength(0);
     });
 });
