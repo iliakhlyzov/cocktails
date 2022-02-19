@@ -2,7 +2,7 @@ import http from 'http';
 import _ from 'lodash';
 import bootstrap from './data/bootstrap/bootstrap';
 import 'reflect-metadata';
-import { CocktailTagBuilder } from './services/CocktailBuilder/CocktailBuilder';
+import { CocktailTagBuilder } from './services/CocktailTagBuilder/CocktailTagBuilder';
 
 /**
  * Tasks
@@ -17,7 +17,7 @@ import { CocktailTagBuilder } from './services/CocktailBuilder/CocktailBuilder';
 class Program {
   public static async Main() {
     await bootstrap();
-    const server = http
+    http
       .createServer(function async(req, res) {
         if (CocktailTagBuilder.getLoadStatus() === 'Ready') {
           res.writeHead(200, { 'Content-Type': 'application/json' });
