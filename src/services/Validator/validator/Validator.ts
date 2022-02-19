@@ -18,12 +18,11 @@ export class DrinksValidator {
       const drink: Drink = plainToClass(Drink, rawdrink, {});
       const errors = await v.validate(drink);
       if (errors.length === 0) {
-        return [...await acc, drink];
+        return [...(await acc), drink];
       }
       return await acc;
     }, [] as any);
 
     return this.drinks;
-
   }
 }

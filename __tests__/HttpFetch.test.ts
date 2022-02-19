@@ -1,6 +1,4 @@
-import fetch from 'node-fetch';
 import { URL } from 'url';
-import { DrinkFetchResult } from '../src/services/HttpFetch/HttpFetch.d';
 
 import { HttpFetch } from '../src/services/HttpFetch/HttpFetch';
 

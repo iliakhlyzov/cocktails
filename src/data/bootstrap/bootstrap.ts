@@ -20,6 +20,5 @@ export default async () => {
 
   const taggedCocktails = Transformer.getTaggedCocktailsFromDrinks(drinks);
 
-  
   CocktailTagBuilder.buildCocktailTags(taggedCocktails);
 };

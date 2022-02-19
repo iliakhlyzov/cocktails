@@ -1,6 +1,5 @@
 import { DrinksValidator } from '../src/services/Validator/validator/Validator';
 
-
 describe(' DrinksValidator: Positive tests', () => {
   it('validate object: empty array', async () => {
     const drinks = await DrinksValidator.validate([]);

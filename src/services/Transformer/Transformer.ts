@@ -3,8 +3,30 @@ import { Ingredient, taggedCocktail } from '../../data/interfaces/cocktail';
 import { Drink } from '../Validator/validator/classes/Drink';
 
 export class Transformer {
+  private static taggedCocktails: taggedCocktail[] = [];
+
+  private static parseTags(strTags: string | null) {
+    if (strTags == null || !strTags.trim()) {
+      return [EMPTY_TAG];
+    }
+    const matchedTags = strTags.match(/[a-zA-Z0-9\s]+/gm);
+    if (!matchedTags) {
+      return [EMPTY_TAG];
+    }
+    const tags: string[] = matchedTags.map((tag) => tag.trim());
+    const uniqTags = [...new Set<string>(tags)].filter((tag) => tag !== EMPTY_TAG);
+    if (!uniqTags.length) {
+      return [EMPTY_TAG];
+    }
+    return uniqTags;
+  }
+
+  public static validateStrTags(strTags: string | null) {
+    return this.parseTags(strTags);
+  }
+
   public static getTaggedCocktailsFromDrinks(drinks: Drink[]) {
-    const taggedCocktails: taggedCocktail[] = [];
+    this.taggedCocktails = [];
 
     const strIngredientList: string[] = [];
     const strMeasureList: string[] = [];
@@ -18,7 +40,7 @@ export class Transformer {
       const id = drink.idDrink;
       const name = drink.strDrink;
       const category = drink.strCategory;
-      const tags: string[] = drink.strTags == null || !drink.strTags.trim() ? [EMPTY_TAG] : [...new Set<string>(drink.strTags.trim().split(','))];
+      const tags = this.parseTags(drink.strTags);
       const ingredients: Ingredient[] = [];
       for (let i = 0; i < MEASURE_OR_INGREDIENT_COUNT; i++) {
         const copyDrink: any = drink;
@@ -28,9 +50,9 @@ export class Transformer {
           ingredients.push({ name, measure });
         }
       }
-      taggedCocktails.push({ id, name, category, tags, ingredients });
+      this.taggedCocktails.push({ id, name, category, tags, ingredients });
     });
 
-    return taggedCocktails;
+    return this.taggedCocktails;
   }
 }
