@@ -12,13 +12,12 @@ export default async () => {
   }
 
   const rawdrinks: object[] = drinkFetchResult.drinks;
+
   const drinks = await DrinksValidator.validate(rawdrinks);
 
   if (drinks === null) {
     throw new Error('DrinksValidator Error');
   }
-
   const taggedCocktails = Transformer.getTaggedCocktailsFromDrinks(drinks);
-
   CocktailTagBuilder.buildCocktailTags(taggedCocktails);
 };

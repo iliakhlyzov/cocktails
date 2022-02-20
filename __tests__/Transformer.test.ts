@@ -1,5 +1,5 @@
 import { Transformer } from '../src/services/Transformer/Transformer';
-import { Drink } from '../src/services/Validator/validator/classes/Drink';
+import { Drink } from '../src/data/interfaces/drink';
 describe('Transformer interacts with only validated objects', () => {
   describe('Transformer tests', () => {
     it('drinks is empty array', () => {
